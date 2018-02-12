@@ -9,7 +9,7 @@ int main() {
 		total += val;
 		cout << "гу╟Х = " << total << endl;
 	}
-
+	
 	getchar();
 	getchar();
 	return 0;
