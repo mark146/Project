@@ -1,14 +1,61 @@
-﻿// 시작을 위한 팁: 
-//   1. [솔루션 탐색기] 창을 사용하여 파일을 추가/관리합니다.
-//   2. [팀 탐색기] 창을 사용하여 소스 제어에 연결합니다.
-//   3. [출력] 창을 사용하여 빌드 출력 및 기타 메시지를 확인합니다.
-//   4. [오류 목록] 창을 사용하여 오류를 봅니다.
-//   5. [프로젝트] > [새 항목 추가]로 이동하여 새 코드 파일을 만들거나, [프로젝트] > [기존 항목 추가]로 이동하여 기존 코드 파일을 프로젝트에 추가합니다.
-//   6. 나중에 이 프로젝트를 다시 열려면 [파일] > [열기] > [프로젝트]로 이동하고 .sln 파일을 선택합니다.
-
-#ifndef PCH_H
+﻿#ifndef PCH_H
 #define PCH_H
 
 // TODO: 여기에 미리 컴파일하려는 헤더 추가
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+struct vo {
+	char filename[20];
+	char ch;
+};
+
+class FileIn {
+public:
+	void init() {
+		vo v;
+
+		cout << "새로운 파일 이름을 입력하시오: ";
+		cin >> v.filename;
+
+		//입력 스트림을 비움
+		cin.ignore(1, '\n');
+
+		//새로운 ofstream 객체를 생성하여 파일을 오픈함.
+		ofstream fout(v.filename);
+
+		/*
+		 cin.get(ch)가 false일 때까지 입력된 문자를 파일에 기록하며, Ctrl + Z를 입력하면 false를 반환한다.
+		 cin.get(ch) 사용 이유 : cin >> ch;를 사용해서 할수도 있었으나
+		 이 코드는 공백을 무시하므로 입력한 키 값중에서 백색문자는 제외하고 파일에 기록한다.
+		*/
+		while (cin.get(v.ch)) {
+			fout << v.ch;
+		}
+
+		fout.close();
+	}
+};
+
+class FileOut {
+public:
+	void init() {
+		vo v;
+
+		cout << "\n----------------------- 파일의 내용 -----------------------\n";
+
+		// 새로운 ifstream 객체를 생성하여 파일을 오픈함.
+		ifstream fin(v.filename);
+
+		// 파일에서 한개의 문자를 읽어 화면에 출력함.
+		while (fin.get(v.ch)) {
+			cout << v.ch;
+		}
+
+		fin.close();
+	}
+};
+
 
 #endif //PCH_H
